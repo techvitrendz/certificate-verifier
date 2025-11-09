@@ -12,7 +12,9 @@ function initAdmin() {
 				const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
 				const projectId = process.env.FIREBASE_PROJECT_ID;
 				if (pk && clientEmail && projectId) {
-					const fixedKey = pk.includes("\\n") ? pk : pk.replace(/\\n/g, "\n");
+					// Normalize private key: convert literal "\\n" sequences to real newlines.
+					// This handles env files where the key was stored with escaped newlines.
+					const fixedKey = pk.replace(/\\n/g, "\n");
 					const serviceAccountFromParts = {
 						private_key: fixedKey,
 						client_email: clientEmail,
@@ -67,6 +69,10 @@ function initAdmin() {
 		console.warn(
 			"firebase-admin init warning",
 			String((err as Error)?.message || err)
+		);
+		// Also print a helpful hint for common deployment misconfiguration
+		console.warn(
+			"Hint: ensure FIREBASE_SERVICE_ACCOUNT_JSON is valid JSON or FIREBASE_PRIVATE_KEY/FIREBASE_CLIENT_EMAIL/FIREBASE_PROJECT_ID are set."
 		);
 	}
 }
