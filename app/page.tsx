@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
 
@@ -37,7 +38,19 @@ export default function Home() {
 	}
 
 	return (
-		<div className="min-h-screen flex items-center justify-center p-8 bg-background">
+		<div className="min-h-screen flex flex-col items-center justify-start p-8 bg-background">
+			{/* top-centered logo */}
+			<div className="w-full flex justify-center mb-6">
+				<Image
+					src="/logo.png"
+					alt="VITrendz"
+					width={160}
+					height={80}
+					className="h-20 w-auto"
+					priority
+				/>
+			</div>
+
 			<main className="mx-auto w-full max-w-5xl rounded-xl bg-card text-card-foreground p-10 shadow-lg ring-1 ring-sidebar-border">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
 					<section className="space-y-4 px-4">
